@@ -8,24 +8,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Builder
-@Document(collection = "customers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "customers")
 public class Customer {
-
     @Id
     private String id;
     private CustomerType customerType; // Tipo de cliente (PERSONAL o BUSINESS)
+    private String firstName;
+    private String lastName;
+    private String dni;
     private String email;
     private String phoneNumber;
     private String address;
-    // --- Campos Específicos para Cliente PERSONAL ---
-    private String dni;
-    private String firstName;
-    private String lastName;
-
-    // --- Campos Específicos para Cliente EMPRESARIAL ---
-    private String ruc;
-    private String businessName;
 }

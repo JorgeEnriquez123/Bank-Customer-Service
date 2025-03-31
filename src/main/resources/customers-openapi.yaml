@@ -9,9 +9,12 @@ servers:
 
 components:
   schemas:
-    CustomerType:
+    CustomerTypeEnum:
       type: string
       description: Tipo de cliente (PERSONAL o BUSINESS)
+      enum:
+        - PERSONAL
+        - BUSINESS
 
     CustomerRequest:
       type: object
@@ -24,7 +27,7 @@ components:
         - lastName
       properties:
         customerType:
-          type: string
+          $ref: '#/components/schemas/CustomerTypeEnum'
           description: Tipo de cliente (PERSONAL o BUSINESS). Debe ser 'PERSONAL' o 'BUSINESS'.
         email:
           type: string
@@ -46,13 +49,6 @@ components:
         lastName:
           type: string
           description: Apellido del cliente (solo para tipo PERSONAL)
-        ruc:
-          type: string
-          description: RUC de la empresa (solo para tipo BUSINESS)
-          pattern: "^[0-9]{11}$"
-        businessName:
-          type: string
-          description: Nombre de la empresa (solo para tipo BUSINESS)
 
     CustomerResponse:
       type: object
@@ -61,7 +57,7 @@ components:
           type: string
           description: ID del cliente
         customerType:
-          type: string
+          $ref: '#/components/schemas/CustomerTypeEnum'
           description: Tipo de cliente (PERSONAL o BUSINESS).
         email:
           type: string
@@ -82,12 +78,6 @@ components:
         lastName:
           type: string
           description: Apellido del cliente (solo para tipo PERSONAL)
-        ruc:
-          type: string
-          description: RUC de la empresa (solo para tipo BUSINESS)
-        businessName:
-          type: string
-          description: Nombre de la empresa (solo para tipo BUSINESS)
 
     ErrorResponse:
       type: object
