@@ -21,8 +21,8 @@ public class CustomerApiDelegateImpl implements CustomersApiDelegate {
     }
 
     @Override
-    public Mono<Void> deleteCustomerById(String id, ServerWebExchange exchange) {
-        return customerService.deleteCustomerById(id);
+    public Mono<Void> deleteCustomerByDni(String id, ServerWebExchange exchange) {
+        return customerService.deleteCustomerByDni(id);
     }
 
     @Override
@@ -31,13 +31,13 @@ public class CustomerApiDelegateImpl implements CustomersApiDelegate {
     }
 
     @Override
-    public Mono<CustomerResponse> getCustomerById(String id, ServerWebExchange exchange) {
-        return customerService.getCustomerById(id);
+    public Mono<CustomerResponse> getCustomerByDni(String dni, ServerWebExchange exchange) {
+        return customerService.getCustomerByDni(dni);
     }
 
     @Override
-    public Mono<CustomerResponse> updateCustomerById(String id, Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
+    public Mono<CustomerResponse> updateCustomerByDni(String dni, Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
         return customerRequest
-                .flatMap(customerReq -> customerService.updateCustomerById(id, customerReq));
+                .flatMap(customerReq -> customerService.updateCustomerByDni(dni, customerReq));
     }
 }

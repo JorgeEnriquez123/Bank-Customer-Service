@@ -27,10 +27,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<CustomerResponse> getCustomerById(String id) {
-        return customerRepository.findById(id)
+    public Mono<CustomerResponse> getCustomerByDni(String dni) {
+        return customerRepository.findByDni(dni)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Cliente con id: " + id + " no encontrado")))
+                        "Cliente con dni: " + dni + " no encontrado")))
                 .map(customerMapper::mapToCustomerResponse);
     }
 
@@ -41,16 +41,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<CustomerResponse> updateCustomerById(String id, CustomerRequest customerRequest) {
-        return customerRepository.findById(id)
+    public Mono<CustomerResponse> updateCustomerByDni(String dni, CustomerRequest customerRequest) {
+        return customerRepository.findByDni(dni)
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Cliente con dni: " + dni + " no encontrado")))
                 .flatMap(existingCustomer ->
                         customerRepository.save(updateCustomerFromRequest(existingCustomer, customerRequest)))
                 .map(customerMapper::mapToCustomerResponse);
     }
 
     @Override
-    public Mono<Void> deleteCustomerById(String id) {
-        return customerRepository.deleteById(id);
+    public Mono<Void> deleteCustomerByDni(String dni) {
+        return customerRepository.deleteByDni((dni));
     }
 
     public Customer updateCustomerFromRequest(Customer existingCustomer, CustomerRequest customerRequest) {
